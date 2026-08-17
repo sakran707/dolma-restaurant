@@ -1,7 +1,24 @@
 import { supabase } from '../supabase-client.js';
 
-export async function login(email, password) {
-  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+// تحويل رقم هاتف عراقي محلي (07xxxxxxxxx أو 7xxxxxxxxx) إلى صيغة دولية +964xxxxxxxxx
+// المطلوبة من Supabase Auth لتسجيل الدخول بالهاتف
+function normalizePhone(raw) {
+  const digits = raw.replace(/[\s-]/g, '');
+  if (digits.startsWith('+')) return digits;
+  if (digits.startsWith('00')) return '+' + digits.slice(2);
+  if (digits.startsWith('0')) return '+964' + digits.slice(1);
+  return '+964' + digits;
+}
+
+// تقبل إما بريداً إلكترونياً أو رقم هاتف عراقي في نفس الحقل
+export async function login(identifier, password) {
+  const trimmed = identifier.trim();
+  const isEmail = trimmed.includes('@');
+  const payload = isEmail
+    ? { email: trimmed, password }
+    : { phone: normalizePhone(trimmed), password };
+
+  const { data, error } = await supabase.auth.signInWithPassword(payload);
   if (error) throw error;
   return data;
 }

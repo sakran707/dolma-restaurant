@@ -1,6 +1,10 @@
 /* =====================================================================
-   Dolma Cloud Kitchen — تصميم واجهة الزبون
+   Dolma Cloud Kitchen — تصميم واجهة الزبون (صفحة واحدة متصلة)
    ===================================================================== */
+
+body {
+  padding-bottom: 96px;
+}
 
 /* ---------------------------------------------------------------------
    الشاشة الرئيسية
@@ -100,6 +104,16 @@
 .choice-card:focus-visible {
   border-color: var(--color-brick);
   background: var(--color-brick-soft);
+}
+
+.choice-card.selected {
+  border-color: var(--color-brick);
+  border-width: 2px;
+  background: var(--color-brick-soft);
+}
+
+.choice-card.selected .choice-arrow {
+  color: var(--color-brick);
 }
 
 .choice-icon {
@@ -242,7 +256,15 @@
    ملخص الطلب
    --------------------------------------------------------------------- */
 .summary-block {
-  margin-bottom: 18px;
+  padding-bottom: 14px;
+  margin-bottom: 14px;
+  border-bottom: 1px dashed var(--color-border);
+}
+
+.summary-block:last-of-type {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
 
 .summary-block h4 {

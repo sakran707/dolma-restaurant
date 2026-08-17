@@ -15,8 +15,9 @@
 
 <div class="container">
 
-  <!-- ============================= الرئيسية ============================= -->
-  <section class="screen active" data-screen="home">
+  <!-- ============================= صفحة الطلب — كل شيء في مكان واحد ============================= -->
+  <div id="order-view">
+
     <div class="hero">
       <div class="hero-eyebrow">مطعم سحابي منزلي — دولمة عراقية فريش</div>
       <div class="hero-emblem">🌿</div>
@@ -25,134 +26,69 @@
       <p>دولمة عراقية فريش وغير مطبوخة، تُحضَّر خصيصاً على ذوقك</p>
       <div class="hero-fresh-note">🌱 كل الجدور فريشة وتُحضَّر عند الطلب — وليست مطبوخة مسبقاً</div>
     </div>
-    <button type="button" class="btn btn-primary btn-block" id="btn-start-order">ابدئي طلبك الآن</button>
-  </section>
 
-  <!-- ============================= أنواع الدولمة ============================= -->
-  <section class="screen" data-screen="types">
-    <div class="topbar">
-      <button type="button" class="btn-back" data-back>‹ رجوع</button>
+    <div class="card step-card">
+      <h2>١. اختاري نوع الدولمة</h2>
+      <div class="choice-list" id="types-list"><div class="loading-spinner"></div></div>
     </div>
-    <div class="step-title">اختاري نوع الدولمة</div>
-    <p class="step-subtitle">كل نوع له وصفة ومكوّنات خاصة به</p>
-    <div class="choice-list" id="types-list">
-      <div class="loading-spinner"></div>
-    </div>
-  </section>
 
-  <!-- ============================= الحجم ============================= -->
-  <section class="screen" data-screen="sizes">
-    <div class="topbar">
-      <button type="button" class="btn-back" data-back>‹ رجوع</button>
-    </div>
-    <div class="step-title">اختاري حجم الجدر</div>
-    <p class="step-subtitle">حسب عدد الأشخاص</p>
-    <div class="choice-list" id="sizes-list"></div>
-  </section>
-
-  <!-- ============================= تخصيص المكونات ============================= -->
-  <section class="screen" data-screen="customize">
-    <div class="topbar">
-      <button type="button" class="btn-back" data-back>‹ رجوع</button>
-    </div>
-    <div class="step-title">اختاري مكونات جدرِك على ذوقك</div>
-    <p class="step-subtitle">اضغطي على أي مكوّن لإلغاء اختياره</p>
-    <div id="customize-content"><div class="loading-spinner"></div></div>
-    <div class="sticky-footer">
-      <div class="container">
-        <button type="button" class="btn btn-primary btn-block" id="btn-customize-next">التالي</button>
+    <div class="card step-card">
+      <h2>٢. اختاري حجم الجدر</h2>
+      <div class="choice-list" id="sizes-list">
+        <div class="empty-state">اختاري نوع الدولمة أولاً 👆</div>
       </div>
     </div>
-  </section>
 
-  <!-- ============================= الملاحظات ============================= -->
-  <section class="screen" data-screen="notes">
-    <div class="topbar">
-      <button type="button" class="btn-back" data-back>‹ رجوع</button>
+    <div class="card step-card">
+      <h2>٣. اختاري مكونات جدرِك على ذوقك</h2>
+      <p class="hint">اضغطي على أي مكوّن لإلغاء اختياره</p>
+      <div id="customize-content">
+        <div class="empty-state">اختاري النوع والحجم ليظهر لكِ المكونات</div>
+      </div>
     </div>
-    <div class="step-title">ملاحظات خاصة بالطلب</div>
-    <p class="step-subtitle">مثلاً: بدون باقلاء بسبب الحساسية، بدون فلفل، أريد باذنجان أكثر...</p>
-    <div class="alert alert-warning" style="margin-bottom:14px;">
-      <span>⚠️</span>
-      <span>إذا لديكِ حساسية من أي مكوّن، يرجى التأكد من إلغاء اختياره من الشاشة السابقة وذكر ذلك هنا أيضاً.</span>
-    </div>
-    <div class="field">
+
+    <div class="card step-card">
+      <h2>٤. ملاحظات خاصة بالطلب</h2>
+      <p class="hint">مثلاً: بدون باقلاء بسبب الحساسية، بدون فلفل، أريد باذنجان أكثر...</p>
       <textarea id="notes-textarea" placeholder="اكتبي ملاحظتك هنا (اختياري)"></textarea>
     </div>
-    <div class="sticky-footer">
-      <div class="container">
-        <button type="button" class="btn btn-primary btn-block" id="btn-notes-next">التالي</button>
-      </div>
-    </div>
-  </section>
 
-  <!-- ============================= ملخص الطلب ============================= -->
-  <section class="screen" data-screen="summary">
-    <div class="topbar">
-      <button type="button" class="btn-back" data-back>‹ رجوع</button>
-    </div>
-    <div class="step-title">ملخص الطلب</div>
-    <div id="summary-content"></div>
-    <div class="sticky-footer">
-      <div class="container">
-        <button type="button" class="btn btn-primary btn-block" id="btn-summary-next">متابعة</button>
+    <div class="card step-card">
+      <h2>٥. معلوماتك وموعد الاستلام</h2>
+      <div class="field">
+        <label for="input-name">الاسم الكامل</label>
+        <input type="text" id="input-name" placeholder="مثال: أم علي" />
+      </div>
+      <div class="field">
+        <label for="input-phone">رقم الهاتف</label>
+        <input type="tel" id="input-phone" placeholder="07xxxxxxxxx" inputmode="tel" />
+      </div>
+      <div class="field">
+        <label for="input-address">العنوان (اختياري)</label>
+        <input type="text" id="input-address" placeholder="المنطقة، أقرب نقطة دالة" />
+      </div>
+      <div class="grid-2">
+        <div class="field">
+          <label for="input-date">تاريخ الاستلام</label>
+          <input type="date" id="input-date" />
+        </div>
+        <div class="field">
+          <label for="input-time">وقت الاستلام</label>
+          <input type="time" id="input-time" />
+        </div>
       </div>
     </div>
-  </section>
 
-  <!-- ============================= معلومات العميل ============================= -->
-  <section class="screen" data-screen="customerInfo">
-    <div class="topbar">
-      <button type="button" class="btn-back" data-back>‹ رجوع</button>
+    <div class="card step-card" id="summary-card">
+      <h2>ملخص طلبك</h2>
+      <div id="summary-content"></div>
     </div>
-    <div class="step-title">معلوماتك</div>
-    <p class="step-subtitle">نحتاجها للتواصل معك بخصوص الطلب</p>
-    <div class="field">
-      <label for="input-name">الاسم الكامل</label>
-      <input type="text" id="input-name" placeholder="مثال: أم علي" />
-    </div>
-    <div class="field">
-      <label for="input-phone">رقم الهاتف</label>
-      <input type="tel" id="input-phone" placeholder="07xxxxxxxxx" inputmode="tel" />
-    </div>
-    <div class="field">
-      <label for="input-address">العنوان (اختياري)</label>
-      <input type="text" id="input-address" placeholder="المنطقة، أقرب نقطة دالة" />
-    </div>
-    <div id="customer-info-error" class="error-text" style="display:none;"></div>
-    <div class="sticky-footer">
-      <div class="container">
-        <button type="button" class="btn btn-primary btn-block" id="btn-customerinfo-next">التالي</button>
-      </div>
-    </div>
-  </section>
 
-  <!-- ============================= موعد الاستلام ============================= -->
-  <section class="screen" data-screen="pickup">
-    <div class="topbar">
-      <button type="button" class="btn-back" data-back>‹ رجوع</button>
-    </div>
-    <div class="step-title">موعد الاستلام</div>
-    <p class="step-subtitle">حددي اليوم والوقت المناسبين لك</p>
-    <div class="field">
-      <label for="input-date">التاريخ</label>
-      <input type="date" id="input-date" />
-    </div>
-    <div class="field">
-      <label for="input-time">الوقت</label>
-      <input type="time" id="input-time" />
-    </div>
-    <div id="final-recap"></div>
-    <div id="pickup-error" class="error-text" style="display:none;"></div>
-    <div class="sticky-footer">
-      <div class="container">
-        <button type="button" class="btn btn-primary btn-block" id="btn-confirm-order">تأكيد الحجز</button>
-      </div>
-    </div>
-  </section>
+    <div id="order-error" class="alert alert-danger" style="display:none; margin-bottom:100px;"></div>
+  </div>
 
   <!-- ============================= النجاح ============================= -->
-  <section class="screen" data-screen="success">
+  <div id="success-view" style="display:none;">
     <div class="success-wrap">
       <div class="success-icon">✓</div>
       <h2>تم استلام طلبك بنجاح!</h2>
@@ -160,8 +96,14 @@
       <div class="order-number-box" id="order-number-box"></div>
       <button type="button" class="btn btn-secondary btn-block" id="btn-new-order">إرسال طلب جديد</button>
     </div>
-  </section>
+  </div>
 
+</div>
+
+<div class="sticky-footer" id="sticky-cta">
+  <div class="container">
+    <button type="button" class="btn btn-primary btn-block" id="btn-confirm-order">تأكيد الحجز</button>
+  </div>
 </div>
 
 <script type="module" src="js/customer/app.js"></script>

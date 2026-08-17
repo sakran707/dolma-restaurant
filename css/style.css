@@ -77,6 +77,18 @@ a {
   padding: 0 16px;
 }
 
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 420px) {
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ---------------------------------------------------------------------
    أزرار
    --------------------------------------------------------------------- */
@@ -216,34 +228,28 @@ a {
 }
 
 /* ---------------------------------------------------------------------
-   شاشات المعالج (Wizard)
+   صفحة الطلب المتصلة (صفحة واحدة، بدون تنقّل بين شاشات)
    --------------------------------------------------------------------- */
-.screen {
-  display: none;
-  padding: 20px 0 100px;
+.step-card {
   animation: fadeIn .25s ease;
+  transition: opacity .2s ease;
+  margin-top: 16px;
 }
 
-.screen.active {
-  display: block;
+.step-card.is-disabled {
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.step-card h2 {
+  font-size: 1.05rem;
+  font-weight: 800;
+  margin: 0 0 4px;
 }
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: translateY(0); }
-}
-
-.topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 0 6px;
-}
-
-.step-title {
-  font-size: 1.3rem;
-  font-weight: 800;
-  margin: 4px 0 6px;
 }
 
 .step-subtitle {
@@ -252,31 +258,14 @@ a {
   font-size: 0.95rem;
 }
 
-.progress-dots {
-  display: flex;
-  gap: 6px;
-  justify-content: center;
-  margin: 10px 0 4px;
-}
-
-.progress-dots span {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--color-border);
-}
-
-.progress-dots span.done {
-  background: var(--color-gold);
-}
-
 .sticky-footer {
   position: fixed;
   bottom: 0;
   right: 0;
   left: 0;
-  background: linear-gradient(to top, var(--color-bg) 70%, transparent);
+  background: linear-gradient(to top, var(--color-bg) 78%, transparent);
   padding: 16px;
+  z-index: 20;
 }
 
 .sticky-footer .container {

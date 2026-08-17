@@ -18,14 +18,14 @@ export async function loadMenuData() {
   state.potSizes = sizesRes.data || [];
 }
 
-export function renderTypeChoices(container, onSelect) {
+export function renderTypeChoices(container, onSelect, selectedId) {
   if (!state.dolmaTypes.length) {
     container.innerHTML = '<div class="empty-state">لا تتوفر أنواع دولمة حالياً، حاولي لاحقاً.</div>';
     return;
   }
 
   container.innerHTML = state.dolmaTypes.map((t) => `
-    <button type="button" class="choice-card" data-id="${t.id}">
+    <button type="button" class="choice-card ${t.id === selectedId ? 'selected' : ''}" data-id="${t.id}">
       <span class="choice-icon">${TYPE_ICONS[t.key] || '🍽️'}</span>
       <span class="choice-body">
         <h3>${escapeHtml(t.name_ar)}</h3>
@@ -37,20 +37,22 @@ export function renderTypeChoices(container, onSelect) {
 
   container.querySelectorAll('.choice-card').forEach((btn) => {
     btn.addEventListener('click', () => {
+      container.querySelectorAll('.choice-card').forEach((b) => b.classList.remove('selected'));
+      btn.classList.add('selected');
       const type = state.dolmaTypes.find((t) => t.id === btn.dataset.id);
       onSelect(type);
     });
   });
 }
 
-export function renderSizeChoices(container, onSelect) {
+export function renderSizeChoices(container, onSelect, selectedId) {
   if (!state.potSizes.length) {
     container.innerHTML = '<div class="empty-state">لا تتوفر أحجام حالياً، حاولي لاحقاً.</div>';
     return;
   }
 
   container.innerHTML = state.potSizes.map((s) => `
-    <button type="button" class="choice-card" data-id="${s.id}">
+    <button type="button" class="choice-card ${s.id === selectedId ? 'selected' : ''}" data-id="${s.id}">
       <span class="choice-icon">${SIZE_ICONS[s.key] || '🍲'}</span>
       <span class="choice-body">
         <h3>${escapeHtml(s.name_ar)}</h3>
@@ -62,6 +64,8 @@ export function renderSizeChoices(container, onSelect) {
 
   container.querySelectorAll('.choice-card').forEach((btn) => {
     btn.addEventListener('click', () => {
+      container.querySelectorAll('.choice-card').forEach((b) => b.classList.remove('selected'));
+      btn.classList.add('selected');
       const size = state.potSizes.find((s) => s.id === btn.dataset.id);
       onSelect(size);
     });

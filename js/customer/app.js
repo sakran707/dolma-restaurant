@@ -2,124 +2,119 @@ import { qs, todayIsoDate, friendlyError, formatCurrency } from '../shared/utils
 import { state, resetOrderFlow } from './state.js';
 import { loadMenuData, renderTypeChoices, renderSizeChoices } from './menu.js';
 import { loadRecipeCustomization, renderCustomizeScreen } from './customize.js';
-import { renderSummaryScreen, renderFinalRecap } from './summary.js';
+import { renderLiveSummary } from './summary.js';
 import { submitOrder } from './order.js';
 
-const historyStack = ['home'];
+const typesList = qs('#types-list');
+const sizesList = qs('#sizes-list');
+const customizeContent = qs('#customize-content');
+const notesTextarea = qs('#notes-textarea');
+const summaryContent = qs('#summary-content');
+const orderError = qs('#order-error');
+const confirmBtn = qs('#btn-confirm-order');
 
-function showScreen(name, { push = true } = {}) {
-  document.querySelectorAll('.screen').forEach((s) => s.classList.remove('active'));
-  const target = document.querySelector(`[data-screen="${name}"]`);
-  if (target) target.classList.add('active');
-  if (push) historyStack.push(name);
-  window.scrollTo(0, 0);
+function updateSummary() {
+  renderLiveSummary(summaryContent);
 }
 
-function goBack() {
-  if (historyStack.length <= 1) return;
-  historyStack.pop();
-  const prev = historyStack[historyStack.length - 1] || 'home';
-  showScreen(prev, { push: false });
+function showError(message, scrollTo) {
+  orderError.textContent = message;
+  orderError.style.display = 'block';
+  const target = scrollTo || orderError;
+  target.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
-document.querySelectorAll('[data-back]').forEach((btn) => btn.addEventListener('click', goBack));
+function clearError() {
+  orderError.style.display = 'none';
+}
 
-// -------------------- الرئيسية → الأنواع --------------------
-qs('#btn-start-order').addEventListener('click', async () => {
-  const listEl = qs('#types-list');
-  showScreen('types');
+// -------------------- تحميل القائمة عند فتح الصفحة مباشرة --------------------
+async function init() {
+  qs('#input-date').min = todayIsoDate();
   try {
-    if (!state.dolmaTypes.length) {
-      listEl.innerHTML = '<div class="loading-spinner"></div>';
-      await loadMenuData();
-    }
-    renderTypeChoices(listEl, onSelectType);
+    await loadMenuData();
+    renderTypeChoices(typesList, onSelectType);
   } catch (err) {
-    listEl.innerHTML = `<div class="alert alert-danger">تعذّر تحميل القائمة: ${friendlyError(err)}</div>`;
+    typesList.innerHTML = `<div class="alert alert-danger">تعذّر تحميل القائمة: ${friendlyError(err)}</div>`;
   }
-});
+}
 
+// -------------------- اختيار النوع --------------------
 function onSelectType(type) {
   state.selectedType = type;
-  renderSizeChoices(qs('#sizes-list'), onSelectSize);
-  showScreen('sizes');
+  state.selectedSize = null;
+  state.recipeData = null;
+  state.selections = {};
+  clearError();
+
+  renderSizeChoices(sizesList, onSelectSize);
+  customizeContent.innerHTML = '<div class="empty-state">اختاري الحجم ليظهر لكِ المكونات</div>';
+  updateSummary();
+
+  qs('#sizes-list').closest('.step-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-// -------------------- الحجم → التخصيص --------------------
+// -------------------- اختيار الحجم --------------------
 async function onSelectSize(size) {
   state.selectedSize = size;
-  const content = qs('#customize-content');
-  content.innerHTML = '<div class="loading-spinner"></div>';
-  showScreen('customize');
+  clearError();
+  customizeContent.innerHTML = '<div class="loading-spinner"></div>';
+  updateSummary();
+
   try {
     await loadRecipeCustomization();
-    renderCustomizeScreen(content, null);
+    renderCustomizeScreen(customizeContent, updateSummary);
+    updateSummary();
   } catch (err) {
-    content.innerHTML = `<div class="alert alert-danger">تعذّر تحميل تفاصيل الوصفة: ${friendlyError(err)}</div>`;
+    customizeContent.innerHTML = `<div class="alert alert-danger">تعذّر تحميل تفاصيل الوصفة: ${friendlyError(err)}</div>`;
   }
+
+  customizeContent.closest('.step-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-qs('#btn-customize-next').addEventListener('click', () => {
-  qs('#notes-textarea').value = state.notes;
-  showScreen('notes');
+// -------------------- الملاحظات --------------------
+notesTextarea.addEventListener('input', () => {
+  state.notes = notesTextarea.value;
+  updateSummary();
 });
 
-// -------------------- الملاحظات → الملخص --------------------
-qs('#btn-notes-next').addEventListener('click', () => {
-  state.notes = qs('#notes-textarea').value;
-  renderSummaryScreen(qs('#summary-content'));
-  showScreen('summary');
-});
+// -------------------- تأكيد الحجز --------------------
+confirmBtn.addEventListener('click', async () => {
+  clearError();
 
-// -------------------- الملخص → معلومات العميل --------------------
-qs('#btn-summary-next').addEventListener('click', () => {
-  showScreen('customerInfo');
-});
+  if (!state.selectedType) {
+    showError('الرجاء اختيار نوع الدولمة أولاً.', typesList);
+    return;
+  }
+  if (!state.selectedSize) {
+    showError('الرجاء اختيار حجم الجدر.', sizesList);
+    return;
+  }
+  if (!state.recipeData) {
+    showError('الرجاء الانتظار حتى يتم تحميل المكونات.', customizeContent);
+    return;
+  }
 
-// -------------------- معلومات العميل → الاستلام --------------------
-qs('#btn-customerinfo-next').addEventListener('click', () => {
   const name = qs('#input-name').value.trim();
   const phone = qs('#input-phone').value.trim();
   const address = qs('#input-address').value.trim();
-  const errorEl = qs('#customer-info-error');
-
-  if (!name || !phone) {
-    errorEl.textContent = 'الرجاء إدخال الاسم ورقم الهاتف.';
-    errorEl.style.display = 'block';
-    return;
-  }
-  errorEl.style.display = 'none';
-
-  state.customer = { name, phone, address };
-
-  const dateInput = qs('#input-date');
-  if (!dateInput.min) dateInput.min = todayIsoDate();
-  if (!dateInput.value) dateInput.value = todayIsoDate();
-
-  renderFinalRecap(qs('#final-recap'));
-  showScreen('pickup');
-});
-
-qs('#input-date').addEventListener('change', () => renderFinalRecap(qs('#final-recap')));
-qs('#input-time').addEventListener('change', () => renderFinalRecap(qs('#final-recap')));
-
-// -------------------- تأكيد الحجز --------------------
-qs('#btn-confirm-order').addEventListener('click', async () => {
   const date = qs('#input-date').value;
   const time = qs('#input-time').value;
-  const errorEl = qs('#pickup-error');
-  const btn = qs('#btn-confirm-order');
 
-  if (!date || !time) {
-    errorEl.textContent = 'الرجاء تحديد تاريخ ووقت الاستلام.';
-    errorEl.style.display = 'block';
+  if (!name || !phone) {
+    showError('الرجاء إدخال الاسم ورقم الهاتف.', qs('#input-name'));
     return;
   }
-  errorEl.style.display = 'none';
+  if (!date || !time) {
+    showError('الرجاء تحديد تاريخ ووقت الاستلام.', qs('#input-date'));
+    return;
+  }
+
+  state.customer = { name, phone, address };
   state.pickup = { date, time };
 
-  btn.disabled = true;
-  btn.textContent = 'جارِ إرسال الطلب...';
+  confirmBtn.disabled = true;
+  confirmBtn.textContent = 'جارِ إرسال الطلب...';
 
   try {
     const result = await submitOrder();
@@ -127,13 +122,15 @@ qs('#btn-confirm-order').addEventListener('click', async () => {
     qs('#success-message').textContent = result.needs_price_confirmation
       ? 'سيتم تأكيد السعر النهائي معك من قبل المطعم قريباً.'
       : `السعر النهائي: ${formatCurrency(result.selling_price)}`;
-    showScreen('success');
+    qs('#order-view').style.display = 'none';
+    qs('#success-view').style.display = 'block';
+    qs('#sticky-cta').style.display = 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   } catch (err) {
-    errorEl.textContent = 'تعذّر إرسال الطلب: ' + friendlyError(err);
-    errorEl.style.display = 'block';
+    showError('تعذّر إرسال الطلب: ' + friendlyError(err));
   } finally {
-    btn.disabled = false;
-    btn.textContent = 'تأكيد الحجز';
+    confirmBtn.disabled = false;
+    confirmBtn.textContent = 'تأكيد الحجز';
   }
 });
 
@@ -145,8 +142,18 @@ qs('#btn-new-order').addEventListener('click', () => {
   qs('#input-address').value = '';
   qs('#input-date').value = '';
   qs('#input-time').value = '';
-  qs('#notes-textarea').value = '';
-  historyStack.length = 0;
-  historyStack.push('home');
-  showScreen('home', { push: false });
+  notesTextarea.value = '';
+  sizesList.innerHTML = '<div class="empty-state">اختاري نوع الدولمة أولاً 👆</div>';
+  customizeContent.innerHTML = '<div class="empty-state">اختاري النوع والحجم ليظهر لكِ المكونات</div>';
+  clearError();
+  updateSummary();
+
+  renderTypeChoices(typesList, onSelectType);
+  qs('#success-view').style.display = 'none';
+  qs('#order-view').style.display = 'block';
+  qs('#sticky-cta').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 });
+
+updateSummary();
+init();

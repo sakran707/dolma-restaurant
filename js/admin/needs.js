@@ -51,9 +51,9 @@ async function loadNeeds(root, dateFrom, dateTo) {
         <tbody>
           ${data.map((r) => `
             <tr>
-              <td>${escapeHtml(r.ingredient_name)}</td>
-              <td>${Number(r.total_quantity).toLocaleString('ar-IQ')}</td>
-              <td>${escapeHtml(r.unit)}</td>
+              <td data-label="المكوّن">${escapeHtml(r.ingredient_name)}</td>
+              <td data-label="الكمية الإجمالية">${Number(r.total_quantity).toLocaleString('ar-IQ')}</td>
+              <td data-label="الوحدة">${escapeHtml(r.unit)}</td>
             </tr>
           `).join('')}
         </tbody>

@@ -120,21 +120,21 @@ function orderRow(o) {
   const hasAllergyNote = o.customer_notes && /حساس/.test(o.customer_notes);
   return `
     <tr>
-      <td>${escapeHtml(o.order_number)}</td>
-      <td>${escapeHtml(o.customers?.name || '')}<br><small>${escapeHtml(o.customers?.phone || '')}</small></td>
-      <td>${escapeHtml(o.dolma_types?.name_ar || '')}<br><small>${escapeHtml(o.pot_sizes?.name_ar || '')}</small></td>
-      <td>${formatDateAr(o.pickup_date)}<br><small>${escapeHtml(o.pickup_time || '')}</small></td>
-      <td>${o.needs_price_confirmation ? '<span class="badge badge-gold">بانتظار تأكيد السعر</span>' : formatCurrency(o.selling_price)}</td>
-      <td>${formatCurrency(o.subtotal_cost)}</td>
-      <td>${formatCurrency(o.profit)}</td>
-      <td>
+      <td data-label="رقم الطلب">${escapeHtml(o.order_number)}</td>
+      <td data-label="الزبون">${escapeHtml(o.customers?.name || '')}<br><small>${escapeHtml(o.customers?.phone || '')}</small></td>
+      <td data-label="النوع/الحجم">${escapeHtml(o.dolma_types?.name_ar || '')}<br><small>${escapeHtml(o.pot_sizes?.name_ar || '')}</small></td>
+      <td data-label="الاستلام">${formatDateAr(o.pickup_date)}<br><small>${escapeHtml(o.pickup_time || '')}</small></td>
+      <td data-label="السعر">${o.needs_price_confirmation ? '<span class="badge badge-gold">بانتظار تأكيد السعر</span>' : formatCurrency(o.selling_price)}</td>
+      <td data-label="التكلفة">${formatCurrency(o.subtotal_cost)}</td>
+      <td data-label="الربح">${formatCurrency(o.profit)}</td>
+      <td data-label="الحالة">
         <select class="select-input" data-status-select="${o.id}">
           ${STATUSES.map((s) => `<option value="${s}" ${s === o.status ? 'selected' : ''}>${s}</option>`).join('')}
         </select>
       </td>
-      <td>
-        <button type="button" class="btn btn-secondary" data-toggle-details="${o.id}">التفاصيل</button>
-        <button type="button" class="btn btn-secondary" style="color:var(--color-danger); border-color:var(--color-danger);" data-delete-order="${o.id}">حذف</button>
+      <td data-label="إجراءات">
+        <button type="button" class="btn btn-secondary btn-sm" data-toggle-details="${o.id}">التفاصيل</button>
+        <button type="button" class="btn btn-secondary btn-sm" style="color:var(--color-danger); border-color:var(--color-danger);" data-delete-order="${o.id}">حذف</button>
       </td>
     </tr>
     <tr class="expand-row" id="details-${o.id}" style="display:none;">

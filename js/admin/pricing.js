@@ -26,17 +26,17 @@ async function loadPricing(container) {
         <tbody>
           ${data.map((r) => `
             <tr data-recipe-id="${r.recipe_id}">
-              <td>${escapeHtml(r.dolma_type_name)}</td>
-              <td>${escapeHtml(r.pot_size_name)}</td>
-              <td>${formatCurrency(r.total_cost)}</td>
-              <td>
+              <td data-label="النوع">${escapeHtml(r.dolma_type_name)}</td>
+              <td data-label="الحجم">${escapeHtml(r.pot_size_name)}</td>
+              <td data-label="التكلفة">${formatCurrency(r.total_cost)}</td>
+              <td data-label="سعر البيع">
                 ${r.pricing_mode === 'custom'
                   ? '<span class="badge badge-gold">حسب الطلب</span>'
                   : `<input type="number" step="0.01" class="mini-input" data-price-input value="${r.base_selling_price ?? ''}" />`}
               </td>
-              <td>${r.profit !== null ? formatCurrency(r.profit) : '—'}</td>
-              <td>${r.profit_margin_pct !== null ? r.profit_margin_pct + '%' : '—'}</td>
-              <td>${r.pricing_mode === 'custom' ? '' : '<button type="button" class="btn btn-secondary" data-save-price>حفظ</button>'}</td>
+              <td data-label="الربح">${r.profit !== null ? formatCurrency(r.profit) : '—'}</td>
+              <td data-label="هامش الربح">${r.profit_margin_pct !== null ? r.profit_margin_pct + '%' : '—'}</td>
+              <td data-label="إجراءات">${r.pricing_mode === 'custom' ? '' : '<button type="button" class="btn btn-secondary btn-sm" data-save-price>حفظ</button>'}</td>
             </tr>
           `).join('')}
         </tbody>

@@ -29,12 +29,12 @@ export async function renderCustomersPanel(root) {
         <tbody>
           ${data.map((c) => `
             <tr>
-              <td>${escapeHtml(c.name)}</td>
-              <td>${escapeHtml(c.phone)}</td>
-              <td>${c.total_orders}</td>
-              <td>${c.last_order_at ? formatDateAr(c.last_order_at.slice(0, 10)) : '—'}</td>
-              <td>${formatCurrency(c.total_spent)}</td>
-              <td><button type="button" class="btn btn-secondary" data-view-customer="${c.id}">سجل الطلبات</button></td>
+              <td data-label="الاسم">${escapeHtml(c.name)}</td>
+              <td data-label="الهاتف">${escapeHtml(c.phone)}</td>
+              <td data-label="عدد الطلبات">${c.total_orders}</td>
+              <td data-label="آخر طلب">${c.last_order_at ? formatDateAr(c.last_order_at.slice(0, 10)) : '—'}</td>
+              <td data-label="إجمالي المشتريات">${formatCurrency(c.total_spent)}</td>
+              <td data-label="إجراءات"><button type="button" class="btn btn-secondary btn-sm" data-view-customer="${c.id}">سجل الطلبات</button></td>
             </tr>
             <tr class="expand-row" id="cust-orders-${c.id}" style="display:none;"><td colspan="6"></td></tr>
           `).join('')}

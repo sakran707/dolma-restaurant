@@ -39,18 +39,18 @@ async function loadIngredients(root) {
         <tbody>
           ${data.map((i) => `
             <tr>
-              <td>${escapeHtml(i.name_ar)}</td>
-              <td>${escapeHtml(i.unit)}</td>
-              <td>${formatCurrency(i.unit_price)}</td>
-              <td>${i.cost_method === 'direct' ? 'مباشرة' : 'كمية × سعر'}</td>
-              <td>${i.cost_method === 'direct' ? formatCurrency(i.direct_cost) : '—'}</td>
-              <td>${i.is_allergen ? '<span class="allergen-flag">⚠️ نعم</span>' : 'لا'}</td>
-              <td>${i.is_visible_to_customer ? 'نعم' : 'لا'}</td>
-              <td>${i.is_customer_removable ? 'نعم' : 'لا'}</td>
-              <td>${i.is_active ? '✅' : '❌'}</td>
-              <td>
-                <button type="button" class="btn btn-secondary" data-edit="${i.id}">تعديل</button>
-                <button type="button" class="btn btn-secondary" data-toggle-active="${i.id}">${i.is_active ? 'تعطيل' : 'تفعيل'}</button>
+              <td data-label="الاسم">${escapeHtml(i.name_ar)}</td>
+              <td data-label="الوحدة">${escapeHtml(i.unit)}</td>
+              <td data-label="سعر الوحدة">${formatCurrency(i.unit_price)}</td>
+              <td data-label="طريقة الحساب">${i.cost_method === 'direct' ? 'مباشرة' : 'كمية × سعر'}</td>
+              <td data-label="تكلفة مباشرة">${i.cost_method === 'direct' ? formatCurrency(i.direct_cost) : '—'}</td>
+              <td data-label="حساسية">${i.is_allergen ? '<span class="allergen-flag">⚠️ نعم</span>' : 'لا'}</td>
+              <td data-label="مرئي للزبون">${i.is_visible_to_customer ? 'نعم' : 'لا'}</td>
+              <td data-label="قابل للحذف">${i.is_customer_removable ? 'نعم' : 'لا'}</td>
+              <td data-label="نشط">${i.is_active ? '✅' : '❌'}</td>
+              <td data-label="إجراءات">
+                <button type="button" class="btn btn-secondary btn-sm" data-edit="${i.id}">تعديل</button>
+                <button type="button" class="btn btn-secondary btn-sm" data-toggle-active="${i.id}">${i.is_active ? 'تعطيل' : 'تفعيل'}</button>
               </td>
             </tr>
           `).join('')}

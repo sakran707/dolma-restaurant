@@ -14,7 +14,7 @@ export async function renderRecipesPanel(root) {
   root.innerHTML = `
     <div class="panel-title">الوصفات</div>
     <div class="toolbar">
-      <select class="select-input" id="recipe-select" style="min-width:260px;"></select>
+      <select class="select-input" id="recipe-select" style="min-width:min(260px, 100%); flex:1;"></select>
     </div>
     <div id="recipe-detail"></div>
   `;
@@ -143,18 +143,18 @@ async function loadRecipeDetail(root, recipeId) {
 function recipeIngredientRow(it) {
   return `
     <tr data-ri-row="${it.id}">
-      <td>${escapeHtml(it.ingredients.name_ar)}</td>
-      <td><input type="number" step="0.001" class="mini-input" data-field="quantity" value="${it.quantity}" /></td>
-      <td>
+      <td data-label="المكوّن">${escapeHtml(it.ingredients.name_ar)}</td>
+      <td data-label="الكمية"><input type="number" step="0.001" class="mini-input" data-field="quantity" value="${it.quantity}" /></td>
+      <td data-label="قاعدة التسعير">
         <select class="select-input" data-field="pricing_rule">
           ${PRICING_RULES.map((r) => `<option value="${r.value}" ${r.value === it.pricing_rule ? 'selected' : ''}>${r.label}</option>`).join('')}
         </select>
       </td>
-      <td><input type="number" step="0.01" class="mini-input" data-field="price_delta" value="${it.price_delta}" /></td>
-      <td><input type="checkbox" data-field="is_customer_optional" ${it.is_customer_optional ? 'checked' : ''} /></td>
-      <td><input type="checkbox" data-field="is_addon" ${it.is_addon ? 'checked' : ''} /></td>
-      <td><input type="number" class="mini-input" style="width:60px;" data-field="display_order" value="${it.display_order}" /></td>
-      <td><button type="button" class="btn btn-secondary" data-remove-ri="${it.id}">حذف</button></td>
+      <td data-label="أثر السعر"><input type="number" step="0.01" class="mini-input" data-field="price_delta" value="${it.price_delta}" /></td>
+      <td data-label="اختياري للزبون"><input type="checkbox" data-field="is_customer_optional" ${it.is_customer_optional ? 'checked' : ''} /></td>
+      <td data-label="يظهر كإضافة"><input type="checkbox" data-field="is_addon" ${it.is_addon ? 'checked' : ''} /></td>
+      <td data-label="الترتيب"><input type="number" class="mini-input" style="width:60px;" data-field="display_order" value="${it.display_order}" /></td>
+      <td data-label="إجراءات"><button type="button" class="btn btn-secondary btn-sm" data-remove-ri="${it.id}">حذف</button></td>
     </tr>
   `;
 }

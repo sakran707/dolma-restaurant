@@ -66,13 +66,13 @@ function renderOrdersMiniTable(orders, showDate = false) {
         <tbody>
           ${orders.map((o) => `
             <tr>
-              <td>${escapeHtml(o.order_number)}</td>
-              <td>${escapeHtml(o.customers?.name || '')}<br><small>${escapeHtml(o.customers?.phone || '')}</small></td>
-              <td>${escapeHtml(o.dolma_types?.name_ar || '')}</td>
-              <td>${escapeHtml(o.pot_sizes?.name_ar || '')}</td>
-              <td>${showDate ? formatDateAr(o.pickup_date) : (o.pickup_time || '—')}</td>
-              <td>${formatCurrency(o.selling_price)}</td>
-              <td><span class="status-pill status-${escapeHtml((o.status || '').replaceAll(' ', '-'))}">${escapeHtml(o.status)}</span></td>
+              <td data-label="رقم الطلب">${escapeHtml(o.order_number)}</td>
+              <td data-label="الزبون">${escapeHtml(o.customers?.name || '')}<br><small>${escapeHtml(o.customers?.phone || '')}</small></td>
+              <td data-label="النوع">${escapeHtml(o.dolma_types?.name_ar || '')}</td>
+              <td data-label="الحجم">${escapeHtml(o.pot_sizes?.name_ar || '')}</td>
+              <td data-label="${showDate ? 'تاريخ الاستلام' : 'وقت الاستلام'}">${showDate ? formatDateAr(o.pickup_date) : (o.pickup_time || '—')}</td>
+              <td data-label="السعر">${formatCurrency(o.selling_price)}</td>
+              <td data-label="الحالة"><span class="status-pill status-${escapeHtml((o.status || '').replaceAll(' ', '-'))}">${escapeHtml(o.status)}</span></td>
             </tr>
           `).join('')}
         </tbody>

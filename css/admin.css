@@ -216,17 +216,27 @@ table.data-table tr:hover td {
 
 .mini-input {
   width: 90px;
-  padding: 6px 8px;
+  padding: 8px 10px;
   border-radius: var(--radius-sm);
   border: 1.5px solid var(--color-border);
+  font-size: 0.88rem;
 }
 
 .select-input {
-  padding: 10px 12px;
+  padding: 8px 10px;
   border-radius: var(--radius-sm);
   border: 1.5px solid var(--color-border);
   background: var(--color-surface);
   color: var(--color-text);
+  font-size: 0.88rem;
+}
+
+/* زر مصغّر لاستخدامه داخل صفوف الجداول — بدل الزر الكبير الافتراضي المزدحم */
+.btn-sm {
+  min-height: 34px;
+  padding: 6px 12px;
+  font-size: 0.82rem;
+  border-radius: var(--radius-sm);
 }
 
 .expand-row td {
@@ -244,7 +254,79 @@ table.data-table tr:hover td {
   font-weight: 700;
 }
 
-@media (max-width: 640px) {
-  .admin-header-inner { padding: 10px 14px; }
+/* ---------------------------------------------------------------------
+   استجابة الموبايل — الجداول تتحول إلى بطاقات مكدّسة بدل التمرير الأفقي
+   --------------------------------------------------------------------- */
+@media (max-width: 720px) {
+  .admin-header-inner { padding: 10px 14px; flex-wrap: wrap; gap: 8px; }
+  .admin-brand { font-size: 1rem; }
+  .admin-nav { padding: 0 14px 10px; }
   .admin-main { padding: 14px; }
+  .toolbar { gap: 8px; }
+  .stat-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .table-wrap {
+    overflow-x: visible;
+    background: transparent;
+    border: none;
+  }
+
+  table.data-table {
+    min-width: 0;
+    width: 100%;
+  }
+
+  table.data-table thead {
+    display: none;
+  }
+
+  table.data-table, table.data-table tbody, table.data-table tr {
+    display: block;
+    width: 100%;
+  }
+
+  table.data-table tr {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 4px 12px;
+    margin-bottom: 10px;
+  }
+
+  table.data-table tr.expand-row {
+    border: none;
+    background: transparent;
+    padding: 0;
+    margin: -8px 0 12px;
+  }
+
+  table.data-table tr.expand-row td {
+    border: none;
+    padding: 0;
+  }
+
+  table.data-table td {
+    display: block;
+    padding: 9px 0;
+    border-top: none;
+    border-bottom: 1px dashed var(--color-border);
+  }
+
+  table.data-table td:last-child {
+    border-bottom: none;
+  }
+
+  table.data-table td[data-label]::before {
+    content: attr(data-label);
+    display: block;
+    font-weight: 700;
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    margin-bottom: 4px;
+  }
+
+  table.data-table td .select-input,
+  table.data-table td .mini-input {
+    width: 100%;
+  }
 }

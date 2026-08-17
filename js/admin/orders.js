@@ -34,7 +34,7 @@ async function loadOrders(container) {
     .from('orders')
     .select(`
       id, order_number, status, selling_price, subtotal_cost, profit, needs_price_confirmation,
-      customer_notes, admin_notes, pickup_date, pickup_time, created_at,
+      customer_notes, admin_notes, pickup_date, pickup_time, created_at, customer_id,
       customers(name, phone), dolma_types(name_ar), pot_sizes(name_ar)
     `)
     .order('created_at', { ascending: false })
@@ -87,6 +87,33 @@ async function loadOrders(container) {
       if (updErr) alert('تعذّر تحديث الحالة: ' + friendlyError(updErr));
     });
   });
+
+  container.querySelectorAll('[data-delete-order]').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const orderId = btn.dataset.deleteOrder;
+      const order = data.find((o) => o.id === orderId);
+      if (!confirm(`حذف الطلب ${order.order_number} نهائياً؟ لا يمكن التراجع عن هذا.`)) return;
+
+      const { error: delErr } = await supabase.from('orders').delete().eq('id', orderId);
+      if (delErr) {
+        alert('تعذّر حذف الطلب: ' + friendlyError(delErr));
+        return;
+      }
+
+      // تصحيح إحصائيات العميل (عدد الطلبات وإجمالي المشتريات) بعد الحذف
+      if (order.customer_id) {
+        const { data: cust } = await supabase.from('customers').select('total_orders, total_spent').eq('id', order.customer_id).single();
+        if (cust) {
+          await supabase.from('customers').update({
+            total_orders: Math.max(0, cust.total_orders - 1),
+            total_spent: Math.max(0, Number(cust.total_spent) - Number(order.selling_price || 0)),
+          }).eq('id', order.customer_id);
+        }
+      }
+
+      loadOrders(container);
+    });
+  });
 }
 
 function orderRow(o) {
@@ -107,6 +134,7 @@ function orderRow(o) {
       </td>
       <td>
         <button type="button" class="btn btn-secondary" data-toggle-details="${o.id}">التفاصيل</button>
+        <button type="button" class="btn btn-secondary" style="color:var(--color-danger); border-color:var(--color-danger);" data-delete-order="${o.id}">حذف</button>
       </td>
     </tr>
     <tr class="expand-row" id="details-${o.id}" style="display:none;">

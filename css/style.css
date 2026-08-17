@@ -1,0 +1,324 @@
+/* =====================================================================
+   Dolma Cloud Kitchen — أساسيات التصميم المشتركة
+   هوية دافئة، منزلية، عراقية: طوبي + زيتوني + كريمي + لمسة ذهبية
+   ===================================================================== */
+
+:root {
+  --color-bg: #FBF4E9;
+  --color-surface: #FFFFFF;
+  --color-surface-alt: #FDEFDC;
+  --color-text: #3B2A20;
+  --color-text-muted: #7A6A5C;
+  --color-brick: #B5482B;
+  --color-brick-dark: #8F3620;
+  --color-olive: #5C6B3F;
+  --color-olive-dark: #445030;
+  --color-gold: #C89B3C;
+  --color-gold-light: #F0DDA6;
+  --color-danger: #B3261E;
+  --color-danger-bg: #FBEAE8;
+  --color-success: #2E7D4F;
+  --color-border: #E7DCC9;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --shadow-card: 0 4px 16px rgba(59, 42, 32, 0.08);
+  --shadow-pop: 0 10px 30px rgba(59, 42, 32, 0.16);
+
+  --font-base: 'Segoe UI', Tahoma, 'Noto Kufi Arabic', Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-base);
+  direction: rtl;
+  text-align: right;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  font-family: inherit;
+}
+
+input, textarea, select {
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+a {
+  color: inherit;
+}
+
+.container {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* ---------------------------------------------------------------------
+   أزرار
+   --------------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 14px 20px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform .08s ease, box-shadow .15s ease, background .15s ease;
+  min-height: 48px;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-primary {
+  background: var(--color-brick);
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(181, 72, 43, 0.3);
+}
+
+.btn-primary:hover { background: var(--color-brick-dark); }
+
+.btn-secondary {
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1.5px solid var(--color-border);
+}
+
+.btn-secondary:hover { border-color: var(--color-brick); }
+
+.btn-block {
+  width: 100%;
+}
+
+.btn-gold {
+  background: var(--color-gold);
+  color: #fff;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-back {
+  background: transparent;
+  color: var(--color-text-muted);
+  padding: 8px 4px;
+  font-weight: 600;
+  min-height: auto;
+}
+
+/* ---------------------------------------------------------------------
+   بطاقات عامة
+   --------------------------------------------------------------------- */
+.card {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 18px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.badge-allergen {
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+}
+
+.badge-gold {
+  background: var(--color-gold-light);
+  color: #6B4E19;
+}
+
+/* ---------------------------------------------------------------------
+   تنبيهات
+   --------------------------------------------------------------------- */
+.alert {
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  font-size: 0.92rem;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.alert-warning {
+  background: #FFF4DC;
+  color: #6B4E19;
+  border: 1px solid #E9CB84;
+}
+
+.alert-danger {
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+  border: 1px solid #E9B4AF;
+}
+
+/* ---------------------------------------------------------------------
+   شاشات المعالج (Wizard)
+   --------------------------------------------------------------------- */
+.screen {
+  display: none;
+  padding: 20px 0 100px;
+  animation: fadeIn .25s ease;
+}
+
+.screen.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0 6px;
+}
+
+.step-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  margin: 4px 0 6px;
+}
+
+.step-subtitle {
+  color: var(--color-text-muted);
+  margin: 0 0 18px;
+  font-size: 0.95rem;
+}
+
+.progress-dots {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin: 10px 0 4px;
+}
+
+.progress-dots span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-border);
+}
+
+.progress-dots span.done {
+  background: var(--color-gold);
+}
+
+.sticky-footer {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: linear-gradient(to top, var(--color-bg) 70%, transparent);
+  padding: 16px;
+}
+
+.sticky-footer .container {
+  padding: 0;
+}
+
+/* ---------------------------------------------------------------------
+   Loading / حالات فارغة
+   --------------------------------------------------------------------- */
+.loading-spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid var(--color-border);
+  border-top-color: var(--color-brick);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 30px auto;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--color-text-muted);
+  padding: 30px 10px;
+}
+
+.field {
+  margin-bottom: 16px;
+}
+
+.field label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 6px;
+  font-size: 0.92rem;
+}
+
+.field input[type="text"],
+.field input[type="tel"],
+.field input[type="date"],
+.field input[type="time"],
+.field textarea {
+  width: 100%;
+  padding: 13px 14px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.field textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--color-brick);
+}
+
+.field-hint {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin-top: 4px;
+}
+
+.error-text {
+  color: var(--color-danger);
+  font-size: 0.88rem;
+  margin-top: 6px;
+}

@@ -1,0 +1,327 @@
+/* =====================================================================
+   Dolma Cloud Kitchen — تصميم واجهة الزبون
+   ===================================================================== */
+
+/* ---------------------------------------------------------------------
+   الشاشة الرئيسية
+   --------------------------------------------------------------------- */
+.hero {
+  text-align: center;
+  padding: 36px 10px 10px;
+}
+
+.hero-emblem {
+  width: 84px;
+  height: 84px;
+  margin: 0 auto 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, var(--color-gold-light), var(--color-gold));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  box-shadow: var(--shadow-card);
+}
+
+.hero h1 {
+  font-size: 1.7rem;
+  margin: 0 0 8px;
+  color: var(--color-brick-dark);
+}
+
+.hero p {
+  color: var(--color-text-muted);
+  margin: 0 0 24px;
+  font-size: 1rem;
+}
+
+.hero-fresh-note {
+  background: var(--color-surface-alt);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  font-size: 0.9rem;
+  color: #6B4E19;
+  margin-bottom: 24px;
+}
+
+/* ---------------------------------------------------------------------
+   بطاقات اختيار (أنواع / أحجام)
+   --------------------------------------------------------------------- */
+.choice-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.choice-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  cursor: pointer;
+  text-align: right;
+  width: 100%;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.choice-card:hover,
+.choice-card:focus-visible {
+  border-color: var(--color-brick);
+  box-shadow: var(--shadow-card);
+}
+
+.choice-icon {
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--color-surface-alt);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.choice-body {
+  flex: 1;
+}
+
+.choice-body h3 {
+  margin: 0 0 4px;
+  font-size: 1.05rem;
+}
+
+.choice-body p {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.86rem;
+}
+
+.choice-arrow {
+  color: var(--color-text-muted);
+  font-size: 1.2rem;
+}
+
+/* ---------------------------------------------------------------------
+   تخصيص المكونات — Chips كبيرة صديقة للمس
+   --------------------------------------------------------------------- */
+.ingredient-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.ingredient-chip {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 12px;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--color-border);
+  background: var(--color-surface);
+  cursor: pointer;
+  user-select: none;
+  min-height: 56px;
+  transition: all .12s ease;
+}
+
+.ingredient-chip .chip-check {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 0.9rem;
+  color: transparent;
+  background: #fff;
+}
+
+.ingredient-chip.selected {
+  border-color: var(--color-olive);
+  background: #F1F5E9;
+}
+
+.ingredient-chip.selected .chip-check {
+  background: var(--color-olive);
+  border-color: var(--color-olive);
+  color: #fff;
+}
+
+.ingredient-chip.excluded-look {
+  opacity: 0.55;
+}
+
+.ingredient-chip .chip-name {
+  font-weight: 600;
+  font-size: 0.98rem;
+}
+
+.ingredient-chip .chip-allergen {
+  position: absolute;
+  top: -8px;
+  left: -6px;
+  font-size: 0.68rem;
+}
+
+.section-label {
+  font-weight: 800;
+  margin: 22px 0 10px;
+  font-size: 1rem;
+}
+
+.core-note {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  background: var(--color-surface-alt);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  margin-bottom: 16px;
+}
+
+.addon-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--color-border);
+  background: var(--color-surface);
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.addon-row.selected {
+  border-color: var(--color-gold);
+  background: #FFF8EA;
+}
+
+.addon-row .addon-price {
+  font-weight: 700;
+  color: var(--color-gold);
+  font-size: 0.9rem;
+}
+
+/* ---------------------------------------------------------------------
+   ملخص الطلب
+   --------------------------------------------------------------------- */
+.summary-block {
+  margin-bottom: 18px;
+}
+
+.summary-block h4 {
+  margin: 0 0 8px;
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+}
+
+.summary-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.summary-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+}
+
+.summary-list li.included::before {
+  content: "✓";
+  color: var(--color-success);
+  font-weight: 800;
+}
+
+.summary-list li.excluded::before {
+  content: "✗";
+  color: var(--color-danger);
+  font-weight: 800;
+}
+
+.summary-list li.excluded {
+  color: var(--color-text-muted);
+  text-decoration: line-through;
+}
+
+.summary-notes {
+  background: var(--color-surface-alt);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  font-size: 0.9rem;
+  white-space: pre-wrap;
+}
+
+.price-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--color-brick);
+  color: #fff;
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
+  margin-top: 6px;
+}
+
+.price-box .price-label {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.price-box .price-value {
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.price-box.pending {
+  background: var(--color-gold);
+}
+
+/* ---------------------------------------------------------------------
+   شاشة النجاح
+   --------------------------------------------------------------------- */
+.success-wrap {
+  text-align: center;
+  padding: 40px 10px;
+}
+
+.success-icon {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: #E4F3E9;
+  color: var(--color-success);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.4rem;
+  margin: 0 auto 18px;
+}
+
+.order-number-box {
+  background: var(--color-surface);
+  border: 2px dashed var(--color-gold);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin: 18px 0;
+}
+
+@media (max-width: 380px) {
+  .ingredient-grid {
+    grid-template-columns: 1fr;
+  }
+}

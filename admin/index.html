@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>لوحة إدارة مطعم الدولمة</title>
+<link rel="stylesheet" href="../css/style.css" />
+<link rel="stylesheet" href="../css/admin.css" />
+</head>
+<body>
+
+<!-- ============================= تسجيل الدخول ============================= -->
+<div id="login-view" class="login-wrap">
+  <div class="card login-card">
+    <div class="hero-emblem" style="margin:0 auto 14px;">🔐</div>
+    <h2 style="text-align:center; margin-top:0;">لوحة إدارة المطعم</h2>
+    <div class="field">
+      <label for="login-email">البريد الإلكتروني</label>
+      <input type="text" id="login-email" autocomplete="username" />
+    </div>
+    <div class="field">
+      <label for="login-password">كلمة المرور</label>
+      <input type="password" id="login-password" autocomplete="current-password" />
+    </div>
+    <div id="login-error" class="error-text" style="display:none;"></div>
+    <button type="button" class="btn btn-primary btn-block" id="btn-login">تسجيل الدخول</button>
+  </div>
+</div>
+
+<!-- ============================= التطبيق ============================= -->
+<div id="app-view" style="display:none;">
+  <header class="admin-header">
+    <div class="admin-header-inner">
+      <div class="admin-brand">🌿 لوحة إدارة الدولمة</div>
+      <button type="button" class="btn btn-secondary" id="btn-logout">تسجيل الخروج</button>
+    </div>
+    <nav class="admin-nav" id="admin-nav">
+      <button type="button" class="nav-tab active" data-tab="dashboard">الرئيسية</button>
+      <button type="button" class="nav-tab" data-tab="orders">الطلبات</button>
+      <button type="button" class="nav-tab" data-tab="ingredients">المكونات</button>
+      <button type="button" class="nav-tab" data-tab="recipes">الوصفات</button>
+      <button type="button" class="nav-tab" data-tab="pricing">الأسعار</button>
+      <button type="button" class="nav-tab" data-tab="customers">العملاء</button>
+      <button type="button" class="nav-tab" data-tab="reports">التقارير</button>
+      <button type="button" class="nav-tab" data-tab="needs">احتياج المكونات</button>
+    </nav>
+  </header>
+
+  <main class="admin-main">
+    <section class="admin-panel active" data-panel="dashboard" id="panel-dashboard"></section>
+    <section class="admin-panel" data-panel="orders" id="panel-orders"></section>
+    <section class="admin-panel" data-panel="ingredients" id="panel-ingredients"></section>
+    <section class="admin-panel" data-panel="recipes" id="panel-recipes"></section>
+    <section class="admin-panel" data-panel="pricing" id="panel-pricing"></section>
+    <section class="admin-panel" data-panel="customers" id="panel-customers"></section>
+    <section class="admin-panel" data-panel="reports" id="panel-reports"></section>
+    <section class="admin-panel" data-panel="needs" id="panel-needs"></section>
+  </main>
+</div>
+
+<script type="module" src="../js/admin/app.js"></script>
+</body>
+</html>

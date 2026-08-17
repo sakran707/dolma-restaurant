@@ -1,0 +1,232 @@
+/* =====================================================================
+   Dolma Cloud Kitchen — تصميم لوحة الإدارة
+   ===================================================================== */
+
+.login-wrap {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 380px;
+}
+
+.admin-header {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.admin-header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+}
+
+.admin-brand {
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--color-brick-dark);
+}
+
+.admin-nav {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  gap: 4px;
+  padding: 0 20px 10px;
+  overflow-x: auto;
+}
+
+.nav-tab {
+  background: transparent;
+  border: none;
+  padding: 9px 14px;
+  border-radius: 999px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 0.92rem;
+}
+
+.nav-tab.active {
+  background: var(--color-olive);
+  color: #fff;
+}
+
+.admin-main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.admin-panel {
+  display: none;
+}
+
+.admin-panel.active {
+  display: block;
+}
+
+.panel-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  margin: 0 0 16px;
+}
+
+/* ---------------------------------------------------------------------
+   بطاقات إحصائية
+   --------------------------------------------------------------------- */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  box-shadow: var(--shadow-card);
+}
+
+.stat-card .stat-label {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  margin-bottom: 6px;
+}
+
+.stat-card .stat-value {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--color-brick-dark);
+}
+
+/* ---------------------------------------------------------------------
+   جداول
+   --------------------------------------------------------------------- */
+.table-wrap {
+  overflow-x: auto;
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+}
+
+table.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  min-width: 640px;
+}
+
+table.data-table th {
+  background: var(--color-surface-alt);
+  padding: 10px 12px;
+  text-align: right;
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+table.data-table td {
+  padding: 10px 12px;
+  border-top: 1px solid var(--color-border);
+  vertical-align: middle;
+}
+
+table.data-table tr:hover td {
+  background: #FBF8F1;
+}
+
+.status-pill {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.status-جديد { background: #E7EEFB; color: #2A4C9B; }
+.status-تم-التأكيد { background: #E6F3EA; color: #2E7D4F; }
+.status-قيد-التحضير { background: #FFF4DC; color: #6B4E19; }
+.status-جاهز { background: #F0DDA6; color: #6B4E19; }
+.status-تم-التسليم { background: #E4F3E9; color: #2E7D4F; }
+.status-ملغي { background: var(--color-danger-bg); color: var(--color-danger); }
+
+/* ---------------------------------------------------------------------
+   نماذج الإدارة (مكونات/وصفات)
+   --------------------------------------------------------------------- */
+.admin-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.toolbar .btn {
+  min-height: 40px;
+  padding: 9px 16px;
+}
+
+.pill-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 0.88rem;
+  user-select: none;
+}
+
+.mini-input {
+  width: 90px;
+  padding: 6px 8px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--color-border);
+}
+
+.select-input {
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.expand-row td {
+  background: #FCFAF4 !important;
+  padding: 16px !important;
+}
+
+.detail-line {
+  font-size: 0.86rem;
+  margin-bottom: 4px;
+}
+
+.allergen-flag {
+  color: var(--color-danger);
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .admin-header-inner { padding: 10px 14px; }
+  .admin-main { padding: 14px; }
+}

@@ -4,29 +4,32 @@
    ===================================================================== */
 
 :root {
-  --color-bg: #FBF4E9;
+  --color-bg: #F5F1EA;
   --color-surface: #FFFFFF;
-  --color-surface-alt: #FDEFDC;
-  --color-text: #3B2A20;
-  --color-text-muted: #7A6A5C;
+  --color-surface-alt: #FBEADE;
+  --color-text: #2B2420;
+  --color-text-muted: #6B7280;
   --color-brick: #B5482B;
   --color-brick-dark: #8F3620;
+  --color-brick-soft: #FBEADE;
   --color-olive: #5C6B3F;
   --color-olive-dark: #445030;
   --color-gold: #C89B3C;
-  --color-gold-light: #F0DDA6;
-  --color-danger: #B3261E;
+  --color-gold-light: #FBF1D9;
+  --color-danger: #A63A2B;
   --color-danger-bg: #FBEAE8;
-  --color-success: #2E7D4F;
-  --color-border: #E7DCC9;
+  --color-success: #1B7A4A;
+  --color-border: #E4E1DA;
 
+  /* نفس منطق الحواف والمسافات المعتمد في حاسبة الترقية العلمية: بطاقات مسطّحة
+     بحدود خفيفة بدل ظل ثقيل، وأزرار/حقول بحواف أصغر */
   --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 22px;
-  --shadow-card: 0 4px 16px rgba(59, 42, 32, 0.08);
-  --shadow-pop: 0 10px 30px rgba(59, 42, 32, 0.16);
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --shadow-card: none;
+  --shadow-pop: 0 10px 30px rgba(43, 36, 32, 0.14);
 
-  --font-base: 'Segoe UI', Tahoma, 'Noto Kufi Arabic', Arial, sans-serif;
+  --font-base: 'Cairo', Tahoma, 'Noto Kufi Arabic', Arial, sans-serif;
 }
 
 * {
@@ -44,9 +47,10 @@ body {
   font-family: var(--font-base);
   direction: rtl;
   text-align: right;
-  line-height: 1.6;
+  line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
+  font-variant-numeric: tabular-nums;
 }
 
 img {
@@ -82,12 +86,12 @@ a {
   justify-content: center;
   gap: 8px;
   border: none;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   padding: 14px 20px;
-  font-size: 1.05rem;
-  font-weight: 600;
+  font-size: 1.02rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: transform .08s ease, box-shadow .15s ease, background .15s ease;
+  transition: transform .08s ease, background .15s ease, border-color .15s ease;
   min-height: 48px;
 }
 
@@ -98,7 +102,6 @@ a {
 .btn-primary {
   background: var(--color-brick);
   color: #fff;
-  box-shadow: 0 6px 16px rgba(181, 72, 43, 0.3);
 }
 
 .btn-primary:hover { background: var(--color-brick-dark); }
@@ -110,6 +113,15 @@ a {
 }
 
 .btn-secondary:hover { border-color: var(--color-brick); }
+
+/* أزرار Outline — مطابقة لأسلوب btn-outline في حاسبة الترقية: خلفية بيضاء + حد وخط بلون العلامة */
+.btn-outline {
+  background: var(--color-surface);
+  color: var(--color-brick);
+  border: 1.5px solid var(--color-brick);
+}
+
+.btn-outline:hover { background: var(--color-brick-soft); }
 
 .btn-block {
   width: 100%;
@@ -138,17 +150,30 @@ a {
    --------------------------------------------------------------------- */
 .card {
   background: var(--color-surface);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-card);
-  padding: 18px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+}
+
+.card h2, .card h3, .card h4 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card .hint {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  margin: 4px 0 14px;
 }
 
 .badge {
   display: inline-block;
-  padding: 4px 10px;
+  padding: 2px 10px;
   border-radius: 999px;
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .badge-allergen {
@@ -159,6 +184,11 @@ a {
 .badge-gold {
   background: var(--color-gold-light);
   color: #6B4E19;
+}
+
+.badge-brick {
+  background: var(--color-brick-soft);
+  color: var(--color-brick);
 }
 
 /* ---------------------------------------------------------------------

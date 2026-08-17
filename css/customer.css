@@ -7,7 +7,15 @@
    --------------------------------------------------------------------- */
 .hero {
   text-align: center;
-  padding: 36px 10px 10px;
+  padding: 30px 10px 10px;
+}
+
+.hero-eyebrow {
+  font-size: 0.78rem;
+  letter-spacing: 0.4px;
+  color: var(--color-text-muted);
+  font-weight: 600;
+  margin-bottom: 10px;
 }
 
 .hero-emblem {
@@ -20,19 +28,40 @@
   align-items: center;
   justify-content: center;
   font-size: 2.2rem;
-  box-shadow: var(--shadow-card);
 }
 
 .hero h1 {
-  font-size: 1.7rem;
-  margin: 0 0 8px;
-  color: var(--color-brick-dark);
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin: 0 0 10px;
+  color: var(--color-text);
 }
+
+.hero h1 span {
+  color: var(--color-brick);
+}
+
+.hero-rule {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+  width: 72px;
+  margin: 0 auto 14px;
+}
+
+.hero-rule span {
+  height: 5px;
+  border-radius: 3px;
+  flex: 1;
+}
+
+.hero-rule .r1 { background: var(--color-brick); }
+.hero-rule .r2 { background: var(--color-gold); }
 
 .hero p {
   color: var(--color-text-muted);
   margin: 0 0 24px;
-  font-size: 1rem;
+  font-size: 0.92rem;
 }
 
 .hero-fresh-note {
@@ -59,18 +88,18 @@
   gap: 14px;
   background: var(--color-surface);
   border: 1.5px solid var(--color-border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   padding: 16px;
   cursor: pointer;
   text-align: right;
   width: 100%;
-  transition: border-color .15s ease, box-shadow .15s ease;
+  transition: border-color .15s ease, background .15s ease;
 }
 
 .choice-card:hover,
 .choice-card:focus-visible {
   border-color: var(--color-brick);
-  box-shadow: var(--shadow-card);
+  background: var(--color-brick-soft);
 }
 
 .choice-icon {
@@ -267,11 +296,12 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: var(--color-brick);
+  background: var(--color-text);
   color: #fff;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   padding: 18px 20px;
   margin-top: 6px;
+  border-top: 3px solid var(--color-brick);
 }
 
 .price-box .price-label {
@@ -285,7 +315,12 @@
 }
 
 .price-box.pending {
-  background: var(--color-gold);
+  background: var(--color-text);
+  border-top-color: var(--color-gold);
+}
+
+.price-box.pending .price-value {
+  color: var(--color-gold-light);
 }
 
 /* ---------------------------------------------------------------------
@@ -318,6 +353,7 @@
   font-weight: 800;
   letter-spacing: 1px;
   margin: 18px 0;
+  font-variant-numeric: tabular-nums;
 }
 
 @media (max-width: 380px) {
